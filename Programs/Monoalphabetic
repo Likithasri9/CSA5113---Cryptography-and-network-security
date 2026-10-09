@@ -1,0 +1,48 @@
+
+#include <stdio.h>
+#include <ctype.h>
+
+char key[] = "QWERTYUIOPASDFGHJKLZXCVBNM";
+
+void encrypt(char text[]) {
+    for (int i = 0; text[i] != '\0'; i++) {
+        char ch = toupper(text[i]);
+
+        if (ch >= 'A' && ch <= 'Z') {
+            text[i] = key[ch - 'A'];
+        }
+    }
+}
+
+void decrypt(char text[]) {
+    for (int i = 0; text[i] != '\0'; i++) {
+        for (int j = 0; j < 26; j++) {
+            if (text[i] == key[j]) {
+                text[i] = 'A' + j;
+                break;
+            }
+        }
+    }
+}
+
+int main() {
+    char message[1000];
+
+    printf("Enter the message: ");
+    fgets(message, sizeof(message), stdin);
+
+    for (int i = 0; message[i] != '\0'; i++) {
+        if (message[i] == '\n') {
+            message[i] = '\0';
+            break;
+        }
+    }
+
+    encrypt(message);
+    printf("Encrypted text: %s\n", message);
+
+    decrypt(message);
+    printf("Decrypted text: %s\n", message);
+
+    return 0;
+}
